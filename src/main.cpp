@@ -61,9 +61,9 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
+//uses a slower maimum velocity than in driver control to be more precise
 chassis->setMaxVelocity(100);
 chassis->setState({0_in, 0_in, 0_deg});
-//chassis->getModel()->left(1);
 //options:
 //1)runs the 2 point match auton on the right side
 //left();
@@ -101,48 +101,55 @@ void opcontrol() {
 		lcd::print(0, "%d %d %d", (lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
 		                 (lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
 		                 (lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
-
+		//creates tank control for the chassis
 		chassis->getModel()->tank(master.get_analog(ANALOG_RIGHT_Y),
 												master.get_analog(ANALOG_LEFT_Y));
-
+		//moves the intakes in
 		if (master.get_digital(DIGITAL_R1)){
 			rightintake.move_velocity(mv);
 			leftintake.move_velocity(mv);
 		}
+		//moves the intakes out
 		else if (master.get_digital(DIGITAL_R2)){
 			rightintake.move_velocity(-mv);
 			leftintake.move_velocity(-mv);
 		}
+		//if R1 or R2 isnt pressed stop moving the intakes
 		else{
 			rightintake.move_velocity(0);
 			leftintake.move_velocity(0);
 		}
-
+		//moves the lower two tower rollers up
 		if (master.get_digital(DIGITAL_L1)){
 			towerlower.move_velocity(mv);
 		}
+		// moves lower tower rollers down
 		else if (master.get_digital(DIGITAL_L2)){
 			towerlower.move_velocity(-mv);
 		}
+		//stops moving the lower tower roller
 		else {
 			towerlower.move_velocity(0);
 		}
-
+		//moves the upper and lower towers in order to shoot the ball out
 		if (master.get_digital(DIGITAL_UP)){
 			tower.move_velocity(2.5*mv);
 			towerlower.move_velocity(mv);
 		}
+		//moves the whole tower down, not that important
 		else if (master.get_digital(DIGITAL_DOWN)){
 			tower.move_velocity(-2.5*mv);
 			towerlower.move_velocity(-mv);
 		}
+		//stops the upper tower, the lower tower doesnt need to be stopped because it already is
 		else {
 			tower.move_velocity(0);
 		}
+		//starts the autonomous from the A button, helpful for testing
 		if (master.get_digital(DIGITAL_A)){
 			autonomous();
 		}
-
-		delay(20);
+		//updates ever 10 milliseconds
+		delay(10);
 	}
 }

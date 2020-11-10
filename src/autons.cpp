@@ -1,3 +1,4 @@
+//autons.cpp
 #include "main.h"
 //declares motors and controlers
 pros::Controller master(pros::E_CONTROLLER_MASTER);
@@ -8,10 +9,8 @@ pros::Motor towerlower(11);
 //sets up okapi chassis control
 std::shared_ptr<okapi::OdomChassisController> chassis =
 	okapi::ChassisControllerBuilder()
-		.withMotors(-6, 7) // Left: 14, 16 | Right: 15, 17
-		.withDimensions(okapi::AbstractMotor::gearset::green, {{4.125_in, 12.75_in}, okapi::imev5GreenTPR}) // Drop Center Wheels: 4.32in
-		.withMaxVelocity(125)
-//		.withSensors(ADIEncoder{'A', 'B', true}, ADIEncoder{'C', 'D'}) // Left Tracking Pod: 'A', 'B' | Right Tracking Pod: 'C', 'D'
+		.withMotors(-6, 7)
+		.withDimensions(okapi::AbstractMotor::gearset::green, {{4.125_in, 12.75_in}, okapi::imev5GreenTPR})
 		.withOdometry()
 		.buildOdometry();
 std::shared_ptr<okapi::AsyncMotionProfileController> profileController =
