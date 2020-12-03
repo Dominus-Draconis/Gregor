@@ -7,7 +7,7 @@ void left();
 void onepointright();
 void onepointleft();
 void skills();
-void score();
+void score(int time);
 //motors
 extern Controller master;
 extern Motor rightintake;

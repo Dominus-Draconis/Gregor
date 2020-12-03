@@ -16,8 +16,8 @@ std::shared_ptr<okapi::OdomChassisController> chassis =
 std::shared_ptr<okapi::AsyncMotionProfileController> profileController =
 	okapi::AsyncMotionProfileControllerBuilder()
 		.withLimits({
-			1, // Maximum linear velocity of the Chassis in m/s
-			5, // Maximum linear acceleration of the Chassis in m/s/s
+			.8, // Maximum linear velocity of the Chassis in m/s
+			2, // Maximum linear acceleration of the Chassis in m/s/s
 			10 // Maximum linear jerk of the Chassis in m/s/s/s
 		})
 		.withOutput(chassis)
