@@ -78,52 +78,7 @@ chassis->setState({0_in, 0_in, 0_deg});
 //onepointleft();
 
 //5) runs the autonomous for skills
-//skills();
-leftintake.move_velocity(mv);
-rightintake.move_velocity(mv);
-towerlower.move_velocity(.5*mv);
-//move the chassis forward to the first ball
-chassis->moveDistance(28_in);
-//turn to face the first goal
-chassis->turnAngle(132_deg);
-//move to the first goal
-chassis->moveDistance(4_in);
-//stop the intakes and tower
-leftintake.move_velocity(stop);
-rightintake.move_velocity(stop);
-towerlower.move_velocity(stop);
-chassis->moveDistance(30_in);
-//put the balls in the goal
-score(2000);
-chassis->setMaxVelocity(50);
-chassis->moveDistance(-5_in);
-chassis->setMaxVelocity(100);
-//turn around
-chassis->turnAngle(208_deg);
-//start intaking balls
-leftintake.move_velocity(mv);
-rightintake.move_velocity(mv);
-towerlower.move_velocity(.5*mv);
-//move to the third ball
-chassis->moveDistance(70_in);
-chassis->turnAngle(-65_deg);
-//stop intaking balls
-leftintake.move_velocity(stop);
-rightintake.move_velocity(stop);
-towerlower.move_velocity(stop);
-chassis->moveDistance(5_in);
-score(2000);
-chassis->setMaxVelocity(50);
-chassis->moveDistance(-9_in);
-chassis->setMaxVelocity(100);
-//turn to face the second goal
-chassis->turnAngle(-60_deg);
-//move twords the second goal
-chassis->moveDistance(20_in);
-chassis->turnAngle(135_deg);
-chassis->moveDistance(20_in);
-//put the balls in the goal
-score(2000);
+skills();
 }
 
 

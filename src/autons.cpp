@@ -110,38 +110,75 @@ void onepointleft(){
 }
 //function for the skills autonomous
 void skills(){
+	//start intaking balls
 	leftintake.move_velocity(mv);
 	rightintake.move_velocity(mv);
 	towerlower.move_velocity(.5*mv);
 	//move the chassis forward to the first ball
 	chassis->moveDistance(28_in);
+	//turn to face the first goal
+	chassis->turnAngle(132_deg);
+	//move to the first goal
+	chassis->moveDistance(4_in);
 	//stop the intakes and tower
 	leftintake.move_velocity(stop);
 	rightintake.move_velocity(stop);
 	towerlower.move_velocity(stop);
-	//turn to face the first goal
-	chassis->turnAngle(145_deg);
-	//move to the first goal
-	chassis->moveDistance(32_in);
-	//put the balls in the goal
-	score(2000);
-	//turn around
-	chassis->turnAngle(175_deg);
+	//moves the rest of the distance to the first goal
+	chassis->moveDistance(30_in);
+	//adjusts robot so its at the right angle
+	chassis->getModel()->left(1);
+	delay(500);
+	chassis->getModel()->left(0);
+	//scores 2 balls in the first goal
+	score(1400);
+	//slows down chassis to back up the robot so it doesnt tip a lot
+	chassis->setMaxVelocity(50);
+	chassis->moveDistance(-5_in);
+	chassis->setMaxVelocity(100);
+	//turn around to face 2nd ball
+	chassis->turnAngle(195_deg);
 	//start intaking balls
 	leftintake.move_velocity(mv);
 	rightintake.move_velocity(mv);
 	towerlower.move_velocity(.5*mv);
 	//move to the third ball
-	chassis->moveDistance(50_in);
+	chassis->moveDistance(70_in);
+	//turns to second goal
+	chassis->turnAngle(-65_deg);
 	//stop intaking balls
 	leftintake.move_velocity(stop);
 	rightintake.move_velocity(stop);
 	towerlower.move_velocity(stop);
-	chassis->moveDistance(-1_in);
-	//turn to face the second goal
-	chassis->turnAngle(285_deg);
-	//move twords the second goal
+	//move to second goal
+	chassis->moveDistance(5_in);
+	//scores one ball in second goal
+	score(1200);
+	//slows robot down to back up
+	chassis->setMaxVelocity(50);
+	chassis->moveDistance(-9_in);
+	chassis->setMaxVelocity(100);
+	//turns the robot to the starting wall
+	chassis->turnAngle(-70_deg);
+	//moves to the wall
+	chassis->moveDistance(40_in);
+	//starts the intakes
+	leftintake.move_velocity(mv);
+	rightintake.move_velocity(mv);
+	//turns to the fourth ball
+	chassis->turnAngle(90_deg);
+	//moves to the fourth ball
+	chassis->moveDistance(10_in);
+	//backs up
+	chassis->moveDistance(-10_in);
+	//stops the intakes
+	leftintake.move_velocity(stop);
+	rightintake.move_velocity(stop);
+	//turns to the third goal
+	chassis->turnAngle(-54_deg);
+	//moves to the third goal
 	chassis->moveDistance(20_in);
-	//put the balls in the goal
-	score(2000);
+	chassis->moveDistance(-5_in);
+	//scores one ball in the third gaol
+	score(1200);
 }
