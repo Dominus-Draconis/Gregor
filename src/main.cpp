@@ -102,8 +102,7 @@ void opcontrol() {
 		                 (lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
 		                 (lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
 		//creates tank control for the chassis
-		chassis->getModel()->tank(master.get_analog(ANALOG_RIGHT_Y),
-												master.get_analog(ANALOG_LEFT_Y));
+		chassis->getModel()->tank((master.get_analog(ANALOG_RIGHT_Y)), master.get_analog(ANALOG_LEFT_Y));
 		//moves the intakes in
 		if (master.get_digital(DIGITAL_R1)){
 			rightintake.move_velocity(mv);
