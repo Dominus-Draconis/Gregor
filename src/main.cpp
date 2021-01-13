@@ -75,10 +75,10 @@ chassis->setState({0_in, 0_in, 0_deg});
 //onepointright();
 
 //4) scores the preload in the goal in front from the left
-//onepointleft();
+onepointleft();
 
 //5) runs the autonomous for skills
-skills();
+//skills();
 }
 
 

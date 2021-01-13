@@ -29,7 +29,7 @@ int stop=0;
 //defines a function to score the balls with the paramerter of how long the shooty thingy should run
 void score(int time){
 	//starts the lower tower and upper tower moving at their respective maximum velocities
-	towerlower.move_velocity(mv);
+	towerlower.move_velocity(.93*mv);
 	tower.move_velocity(3*mv);
 	//waits for the time given when the function is called
 	delay(time);
@@ -39,23 +39,26 @@ void score(int time){
 }
 //function to score 2 points on the right side
 void right(){
+	tower.move_velocity(mv);
+	delay(500);
+	tower.move_velocity(stop);
 	//adjusts the robot
-	chassis->moveDistance(1.5_in);
+	chassis->moveDistance(2_in);
 	chassis->turnAngle(15_deg);
 	//scores the ball
 	score(1500);
 	//turns around to sorta face the side goal
-	chassis->turnAngle(-200_deg);
+	chassis->turnAngle(-180_deg);
 	//starts the intakes and lower tower to prepare to pick up a ball
 	leftintake.move_velocity(mv);
 	rightintake.move_velocity(mv);
 	towerlower.move_velocity(.5*mv);
 	//moves forward by 31.5 inches
-	chassis->moveDistance(31.5_in);
+	chassis->moveDistance(28_in);
 	//turns to face second goal
 	chassis->turnAngle(-60_deg);
 	//moves to the second goal
-	chassis->moveDistance(12_in);
+	chassis->moveDistance(10_in);
 	//stops sucking in balls
 	leftintake.move_velocity(stop);
 	rightintake.move_velocity(stop);
@@ -70,6 +73,7 @@ void right(){
 	chassis->moveDistance(-4_in);
 	//socres for 2 seconds
 	score(2000);
+	chassis->moveDistance(-8_in);
 }
 
 void left(){
@@ -97,17 +101,29 @@ void left(){
 }
 //defines a function to score from the right of the goal
 void onepointright(){
-	//moves closer to the goal then turns to be properly facing it
-	chassis->moveDistance(1.5_in);
+	tower.move_velocity(mv);
+	delay(500);
+	tower.move_velocity(stop);
+	//adjusts the robot
+	chassis->moveDistance(8_in);
 	chassis->turnAngle(-15_deg);
-	//runs the score function for 1.5 seconds
+	//scores the ball
 	score(1500);
+	chassis->moveDistance(-8_in);
+	chassis->turnAngle(180_deg);
 }
 //function to score on the left of the goal
 void onepointleft(){
-	chassis->moveDistance(1.5_in);
+	tower.move_velocity(mv);
+	delay(500);
+	tower.move_velocity(stop);
+	//adjusts the robot
+	chassis->moveDistance(8_in);
 	chassis->turnAngle(15_deg);
+	//scores the ball
 	score(1500);
+	chassis->moveDistance(-8_in);
+	chassis->turnAngle(-180_deg);
 }
 //function for the skills autonomous
 void skills(){
@@ -116,17 +132,19 @@ void skills(){
 	rightintake.move_velocity(mv);
 	towerlower.move_velocity(.5*mv);
 	//move the chassis forward to the first ball
-	chassis->moveDistance(28_in);
-	//turn to face the first goal
-	chassis->turnAngle(132_deg);
-	//move to the first goal
-	chassis->moveDistance(4_in);
+	chassis->moveDistance(27.5_in);
+
+
 	//stop the intakes and tower
 	leftintake.move_velocity(stop);
 	rightintake.move_velocity(stop);
 	towerlower.move_velocity(stop);
+	//turn to face the first goal
+	chassis->turnAngle(130_deg);
+	//move to the first goal
+	chassis->moveDistance(4_in);
 	//moves the rest of the distance to the first goal
-	chassis->moveDistance(30_in);
+	chassis->moveDistance(29.3_in);
 	//adjusts robot so its at the right angle
 	chassis->getModel()->left(1);
 	delay(500);
@@ -136,9 +154,10 @@ void skills(){
 	//slows down chassis to back up the robot so it doesnt tip a lot
 	chassis->setMaxVelocity(50);
 	chassis->moveDistance(-5_in);
-	chassis->setMaxVelocity(100);
+
 	//turn around to face 2nd ball
-	chassis->turnAngle(195_deg);
+	chassis->turnAngle(190_deg);
+	chassis->setMaxVelocity(100);
 	//start intaking balls
 	leftintake.move_velocity(mv);
 	rightintake.move_velocity(mv);
@@ -146,7 +165,7 @@ void skills(){
 	//move to the third ball
 	chassis->moveDistance(70_in);
 	//turns to second goal
-	chassis->turnAngle(-65_deg);
+	chassis->turnAngle(-69_deg);
 	//stop intaking balls
 	leftintake.move_velocity(stop);
 	rightintake.move_velocity(stop);
@@ -167,11 +186,11 @@ void skills(){
 	leftintake.move_velocity(mv);
 	rightintake.move_velocity(mv);
 	//turns to the fourth ball
-	chassis->turnAngle(90_deg);
+	chassis->turnAngle(92_deg);
 	//moves to the fourth ball
-	chassis->moveDistance(10_in);
+	chassis->moveDistance(13.5_in);
 	//backs up
-	chassis->moveDistance(-10_in);
+	chassis->moveDistance(-8_in);
 	//stops the intakes
 	leftintake.move_velocity(stop);
 	rightintake.move_velocity(stop);
