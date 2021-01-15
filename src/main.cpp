@@ -146,7 +146,22 @@ void opcontrol() {
 		}
 		//starts the autonomous from the A button, helpful for testing
 		if (master.get_digital(DIGITAL_A)){
-			autonomous();
+			skills();
+		}
+		if (master.get_digital(DIGITAL_B)){
+			test();
+		}
+		if (master.get_digital(DIGITAL_X)){
+			onepointright();
+		}
+		if (master.get_digital(DIGITAL_Y)){
+			onepointleft();
+		}
+		if (master.get_digital(DIGITAL_LEFT)){
+			left();
+		}
+		if (master.get_digital(DIGITAL_RIGHT)){
+			right();
 		}
 		//updates ever 10 milliseconds
 		delay(10);
