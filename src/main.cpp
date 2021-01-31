@@ -72,10 +72,10 @@ chassis->setState({0_in, 0_in, 0_deg});
 //right();
 
 //3) scores the preload in the goal in front from the right
-//onepointright();
+onepointright();
 
 //4) scores the preload in the goal in front from the left
-onepointleft();
+//onepointleft();
 
 //5) runs the autonomous for skills
 //skills();
@@ -96,7 +96,7 @@ onepointleft();
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-
+int scored = false;
 	while (true) {
 		lcd::print(0, "%d %d %d", (lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
 		                 (lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
@@ -107,11 +107,13 @@ void opcontrol() {
 		if (master.get_digital(DIGITAL_R1)){
 			rightintake.move_velocity(mv);
 			leftintake.move_velocity(mv);
+			scored=false;
 		}
 		//moves the intakes out
 		else if (master.get_digital(DIGITAL_R2)){
 			rightintake.move_velocity(-mv);
 			leftintake.move_velocity(-mv);
+			scored=false;
 		}
 		//if R1 or R2 isnt pressed stop moving the intakes
 		else{
@@ -121,10 +123,12 @@ void opcontrol() {
 		//moves the lower two tower rollers up
 		if (master.get_digital(DIGITAL_L1)){
 			towerlower.move_velocity(mv);
+			scored=false;
 		}
 		// moves lower tower rollers down
 		else if (master.get_digital(DIGITAL_L2)){
 			towerlower.move_velocity(-mv);
+			scored=false;
 		}
 		//stops moving the lower tower roller
 		else {
@@ -132,6 +136,10 @@ void opcontrol() {
 		}
 		//moves the upper and lower towers in order to shoot the ball out
 		if (master.get_digital(DIGITAL_UP)){
+			if (scored==false){
+				chassis->moveDistance(-2_in);
+				scored=true;
+			}
 			tower.move_velocity(2.5*mv);
 			towerlower.move_velocity(mv);
 		}
@@ -147,7 +155,7 @@ void opcontrol() {
 		//starts the autonomous from the A button, helpful for testing
 		if (master.get_digital(DIGITAL_A)){
 			skills();
-		}
+		}//*
 		if (master.get_digital(DIGITAL_B)){
 			test();
 		}
@@ -162,7 +170,7 @@ void opcontrol() {
 		}
 		if (master.get_digital(DIGITAL_RIGHT)){
 			right();
-		}
+		}//*/
 		//updates ever 10 milliseconds
 		delay(10);
 	}

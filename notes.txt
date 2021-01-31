@@ -1,0 +1,31 @@
+-make it rock less (wheel speed/weight distribution)
+-tension on intake chain
+    -maybe move back sprocket back a hole
+-try to figure out angled standoff between intake and tower
+    -or replace standoffs with something better
+    -could use full length piece for intakes and make them go all the way back
+-practice
+-sensors
+
+Tower:
+  -make tower sockets with chain closer to metal piece
+  -put on another vertical pice on left side of tower
+  -move plates onto sides of towers
+
+Chassis:
+  -add another standoff between sides of the Chassis
+      -maybe also replace front standoff with stronger metal piece
+          -do 2 standoffs and 2 flat metal pieces
+          -washers between the standoff and metal, spacers between screw head and metal
+  -replace extending metal on chassis with something else
+  -take off bearings from failed gearing attempt
+  -make axels on chassis all the same length so it can be flat on the wall
+  -if at all possible increase speed of Chassis
+  -tighten back connection screws
+
+Hood:
+  -put extra standoff on hood and use a longer screw
+  -ensure hood is within height
+  -maybe make it shorter
+  -redo mesh
+  -make shorter to decrease weight
