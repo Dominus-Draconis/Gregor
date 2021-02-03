@@ -1,14 +1,16 @@
 //header.h
 #include "main.h"
 //functions
-void score();
-void right();
-void left();
-void onepointright();
-void onepointleft();
-void skills();
-void test();
-void score(int time);
+//void right();
+//void left();
+//void onepointright();
+//void onepointleft();
+void skills1();
+void skills2();
+void skills3();
+void skills4();
+void score(int reps);
+void intake(int mult);
 //motors
 extern Controller master;
 extern Motor rightintake;

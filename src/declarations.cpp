@@ -38,8 +38,8 @@ std::shared_ptr<okapi::AsyncPositionController<double, double>> towerControl =
 int mv=200;
 int stop=0;
 //defines a function to score the balls with the paramerter of how long the shooty thingy should run
-void score(int time){
-	//starts the lower tower and upper tower moving at their respective maximum velocities
+void score(int reps){
+	/*//starts the lower tower and upper tower moving at their respective maximum velocities
 	towerlower.move_velocity(.5*mv);
 	tower.move_velocity(3*mv);
 	//waits for the time given when the function is called
@@ -47,286 +47,175 @@ void score(int time){
 	//stops the tower motors
 	towerlower.move_velocity(stop);
 	tower.move_velocity(stop);
+*/
+	towerlowerControl->setTarget(-90);
+	for (int i=0; i<reps; i++){
+		tower.move_velocity(3*mv);
+		delay(1500);
+		towerlowerControl->setTarget(360*2);
+	}
 }
-//function to score 2 points on the right side
-void right(){
-	//flips out the hood (asynchronously)
-	towerControl->setTarget(-1000);
-	//adjusts the robot
-	chassis->moveDistance(3_in);
-	chassis->getModel()->left(1);
-	delay(500);
-	chassis->getModel()->left(0);
-	chassis->setMaxVelocity(100);
-	//chassis->turnAngle(26_deg);
-	chassis->moveDistance(1_in);
-	//scores the ball
-	chassis->moveDistance(-1_in);
-	score(1500);
-	//backs up
-	chassis->moveDistance(-5_in);
-	//turns around to sorta face the side goal
-	chassis->turnAngle(-184_deg);
-	chassis->setMaxVelocity(200); //speeds up the robot
-	//starts the intakes and lower tower to prepare to pick up a ball
-	leftintake.move_velocity(mv);
-	rightintake.move_velocity(mv);
-	towerlower.move_velocity(.5*mv);
-	//moves forward
-	chassis->moveDistance(28_in);
-	//turns to face second goal
-	chassis->setMaxVelocity(100);
-	chassis->turnAngle(-82_deg);
-	chassis->setMaxVelocity(200);
-	//moves to the second goal
-	chassis->moveDistance(22_in);
-	//stops sucking in balls
-	//moves the right side a bit then the left side a bit to compensate for any variation
-	chassis->setMaxVelocity(150);
-	chassis->getModel()->left(1);
-	delay(250);
-	leftintake.move_velocity(stop);
-	rightintake.move_velocity(stop);
-	towerlower.move_velocity(stop);
-	chassis->getModel()->left(0);
-	chassis->getModel()->right(1);
-	delay(250);
-	chassis->getModel()->right(0);
-	chassis->moveDistance(2_in);
-	chassis->moveDistance(-3_in);
-	//socres for 2 seconds
-	score(2500);
-	chassis->setMaxVelocity(200);
-	chassis->moveDistance(-8_in);
+void intake(int mult){
+	leftintake.move_velocity(mv*mult);
+	rightintake.move_velocity(mv*mult);
+	towerlower.move_velocity(.75*mv*mult);
+}
+void go(okapi::QLength x, okapi::QLength y, bool reversed){
+	if(reversed==false){
+		chassis->turnToPoint({x,y});
+	}
+	chassis->driveToPoint({x,y}, reversed);
 }
 
-void left(){
-	towerControl->setTarget(-1000);
-	//adjusts the robot
-	chassis->moveDistance(4_in);
-	//scores the ball
-	score(1500);
-	chassis->moveDistance(-3_in);
-	//turns around to sorta face the side goal
-	chassis->turnAngle(170_deg);
-	chassis->setMaxVelocity(200); //less magic
-	//starts the intakes and lower tower to prepare to pick up a ball
-	leftintake.move_velocity(mv);
-	rightintake.move_velocity(mv);
-	towerlower.move_velocity(.5*mv);
-	//moves forward by 31.5 inches
-	chassis->moveDistance(29_in);
-	//turns to face second goal
-	chassis->setMaxVelocity(100);
-	chassis->turnAngle(75_deg);
-	chassis->setMaxVelocity(200); //more magic
-	//moves to the second goal
-	chassis->moveDistance(15_in);
-	//stops sucking in balls
-	leftintake.move_velocity(stop);
-	rightintake.move_velocity(stop);
-	towerlower.move_velocity(stop);
-	//moves the right side a bit then the left side a bit to compensate for any variation
-	chassis->setMaxVelocity(100);
-	chassis->getModel()->left(1);
-	delay(500);
-	chassis->getModel()->left(0);
-	chassis->getModel()->right(1);
-	delay(500);
-	chassis->getModel()->right(0);
-	chassis->moveDistance(-2.25_in);
-	//socres for 2 seconds
-	score(2000);
-	chassis->setMaxVelocity(200);
-	chassis->moveDistance(-8_in);
-}
-//defines a function to score from the right of the goal
-void onepointright(){
-	//flips out the hood
-	towerControl->setTarget(-1000);
-	//adjusts the robot
-	chassis->moveDistance(8_in);
-	chassis->setMaxVelocity(50);
-	chassis->turnAngle(-15_deg);
-	chassis->setMaxVelocity(200);
-	chassis->moveDistance(-.75_in);
-	//scores the ball
-	score(1500);
-	//backs up the robot so it isnt touching a ball
-	chassis->moveDistance(-8_in);
-}
-//function to score on the left of the goal
-void onepointleft(){
-	//flips out hood
-	//towerControl->setTarget(-1000);
-	//adjusts the robot
-	chassis->moveDistance(8_in);
-	chassis->setMaxVelocity(50);
-	chassis->turnAngle(15_deg);
-	chassis->setMaxVelocity(200); //and here it is in a different function
-	chassis->moveDistance(-.75_in);
-	//scores the ball
-	score(1500);
-	//backs up the robot so it isnt touching a ball
-	chassis->moveDistance(-8_in);
-}
-void test(){
-	towerControl->setTarget(-1000);
-	chassis->moveDistance(4_in);
-	//scores the ball
-	score(1500);
-	chassis->moveDistance(-3_in);
-	//turns around to sorta face the side goal
-	chassis->turnAngle(184_deg);
-	chassis->setMaxVelocity(200); //less magic
-	//starts the intakes and lower tower to prepare to pick up a ball
-	leftintake.move_velocity(mv);
-	rightintake.move_velocity(mv);
-	towerlower.move_velocity(.5*mv);
-	//moves forward by 31.5 inches
-	chassis->moveDistance(30_in);
-	//turns to face second goal
-	chassis->setMaxVelocity(100);
-	chassis->turnAngle(80_deg);
-	chassis->setMaxVelocity(200); //more magic
-	//moves to the second goal
-	chassis->moveDistance(20_in);
-	//stops sucking in balls
-	leftintake.move_velocity(stop);
-	rightintake.move_velocity(stop);
-	towerlower.move_velocity(stop);
-	//moves the right side a bit then the left side a bit to compensate for any variation
-	chassis->setMaxVelocity(100);
-	chassis->getModel()->left(1);
-	delay(500);
-	chassis->getModel()->left(0);
-	chassis->getModel()->right(1);
-	delay(500);
-	chassis->getModel()->right(0);
-	chassis->moveDistance(-3_in);
-	//socres for 2 seconds
-	score(2000);
-	chassis->setMaxVelocity(200);
-	chassis->moveDistance(-8_in);
-	chassis->turnAngle(-100_deg);
-	chassis->moveDistance(50_in);
-	leftintake.move_velocity(mv);
-	rightintake.move_velocity(mv);
-	towerlower.move_velocity(.5*mv);
-	chassis->setMaxVelocity(100);
-	chassis->turnAngle(-80_deg);
-	chassis->setMaxVelocity(200); //more magic
-	//moves to the second goal
-	chassis->moveDistance(20_in);
-	//stops sucking in balls
-	leftintake.move_velocity(stop);
-	rightintake.move_velocity(stop);
-	towerlower.move_velocity(stop);
-	//moves the right side a bit then the left side a bit to compensate for any variation
-	chassis->setMaxVelocity(100);
-	chassis->getModel()->left(1);
-	delay(500);
-	chassis->getModel()->left(0);
-	chassis->getModel()->right(1);
-	delay(500);
-	chassis->getModel()->right(0);
-	chassis->moveDistance(-3_in);
-	//socres for 2 seconds
-	score(2000);
-	chassis->setMaxVelocity(200);
-	chassis->moveDistance(-8_in);
-}
 //function for the skills autonomous
-void skills(){
-	towerControl->setTarget(-300);
-	//start intaking balls
-	leftintake.move_velocity(mv);
-	rightintake.move_velocity(mv);
-	towerlower.move_velocity(.75*mv);
-	//move the chassis forward to the first ball
+void skills1(){
+	chassis->setState({0_in, 0_in, 0_deg});	//set inital conditions
+	chassis->setMaxVelocity(75);						//make it slow
+	towerControl->setTarget(-300);					//flip out hood
+	intake(1);															//start intakes
+	chassis->moveDistance(25_in);						//move to first ball
+	chassis->turnToAngle(-90_deg);					//turns to vertical center line
+	intake(0);															//stop intakes
+	chassis->moveDistance(36.8_in);					//moves to vertical center line
+	chassis->turnToAngle(-180_deg);					//turns to goal
+	chassis->moveDistance(14.4_in);					//moves to first goal
+	score(2);																//scores 2 balls in first goal
+	chassis->moveDistance(-6.8_in);					//backs up
+	chassis->turnToAngle(0_deg);						//turn around
+	intake(1);															//start intakes
+	chassis->moveDistance(28_in);						//moves to second ball
+	chassis->turnToAngle(45_deg);						//turns to third ball
+	chassis->moveDistance(34.4_in);					//moves to third ball
+	chassis->turnToAngle(15_deg);						//turns to fourth ball
+	chassis->moveDistance(50_in);						//moves to fourth ball
+	chassis->turnToAngle(57_deg);						//turns to second goal
+	intake(0);															//starts intaking balls
+	chassis->moveDistance(24.8_in);					//moves to second goal
+	score(1);																//scores one ball
+	chassis->moveDistance(-10.8_in);				//backs up
+	chassis->turnToAngle(180_deg);					//turns to fifth ball
+	intake(1);															//starts intakes
+	chassis->moveDistance(56_in);						//moves to fifth ball
+	chassis->turnToAngle(90_deg);						//turns to third goal
+	intake(0);															//stops intakes
+	chassis->moveDistance(7.2_in);					//moves to third goal
+	score(2); 															//scores two balls
+	chassis->moveDistance(-7.2_in);					//backs up
+	chassis->turnToAngle(180_deg);					//turns to face starting wall
+	chassis->moveDistance(36_in);						//moves to starting wall
+	chassis->turnToAngle(90_deg);						//turns to sixth ball
+	intake(1);															//starts intakes
+	chassis->moveDistance(15.2_in);					//moves to sixth ball
+	chassis->moveDistance(-15.2_in);				//backs up
+	intake(0);															//stop intakes
+	chassis->turnToAngle(149.5_deg);				//turn to fourth goal
+	chassis->moveDistance(24.4_in);					//move to fourth goal
+	score(1); 															//scores one ball
+	chassis->moveDistance(-10_in);					//backs up
+}
+
+
+
+void skills2(){
+	chassis->setState({0_in, 0_in, 0_deg});
 	chassis->setMaxVelocity(75);
-	chassis->moveDistance(30_in);
-	//stop the intakes and tower
-	leftintake.move_velocity(stop);
-	rightintake.move_velocity(stop);
-	towerlower.move_velocity(stop);
-	//turn to face the first goal
-	//														chassis->setMaxVelocity(50);
-	chassis->turnAngle(135_deg);
-	//														chassis->setMaxVelocity(200);
-	//move to the first goal
-	towerlower.move_velocity(-.1*mv);
-	//towerControl->setTarget(50);
+	towerControl->setTarget(-300);
+	intake(1);
+	chassis->moveDistance(25_in);
+	chassis->turnToAngle(-90_deg);
+	intake(0);
+	chassis->moveDistance(36.8_in);
+	chassis->turnToAngle(-180_deg);
+	chassis->moveDistance(14.4_in);
+	score(2); //two balls
+	chassis->moveDistance(-6.8_in);
+	chassis->turnToAngle(0_deg);
+	intake(1);
+	chassis->moveDistance(28_in);
+	chassis->turnToAngle(63.5_deg);
+	chassis->moveDistance(54.4_in);
+	chassis->turnToAngle(90_deg);
+	intake(0);
+	chassis->moveDistance(7.2_in);
+	score(2); //two balls
+	chassis->moveDistance(-7.2_in);
+	chassis->turnToAngle(180_deg);
 	chassis->moveDistance(36_in);
-	towerlower.move_velocity(stop);
-	//adjusts robot so its at the right angle
-	chassis->getModel()->left(1);
-	delay(1100);
-	chassis->getModel()->left(0);
-	chassis->moveDistance(-3_in);
-	//scores 2 balls in the first goal
-	score(1600);
-	//														chassis->setMaxVelocity(50);
-	//slows down chassis to back up the robot so it doesnt tip a lot
-	chassis->getModel()->left(-1);
-	delay(2200);
-	chassis->getModel()->left(0);
-	chassis->moveDistance(-15_in);
-	chassis->moveDistance(5_in);
-	//turn around to face 3rd ball
-	chassis->turnAngle(-50_deg);
-	//														chassis->setMaxVelocity(200);
-	//start intaking balls
-	leftintake.move_velocity(mv);
-	rightintake.move_velocity(mv);
-	towerlower.move_velocity(.5*mv);
-	//move to the third ball
-	chassis->moveDistance(63_in);
-	//turns to second goal
-	//														chassis->setMaxVelocity(50);
-	chassis->turnAngle(-80_deg);
-	//														chassis->setMaxVelocity(200); //same thing
-	//stop intaking balls
-	leftintake.move_velocity(stop);
-	rightintake.move_velocity(stop);
-	towerlower.move_velocity(stop);
-	//move to second goal
-	chassis->moveDistance(8_in);
-	//scores one ball in second goal
-	score(1200);
-	//slows robot down to back up
-	//														chassis->setMaxVelocity(50);
-	chassis->moveDistance(-9_in);
-	//														chassis->setMaxVelocity(100);
-	//turns the robot to the starting wall
-	//														chassis->setMaxVelocity(50);
-	chassis->turnAngle(-70_deg);
-	//														chassis->setMaxVelocity(200); //here again
-	//moves to the wall
-	chassis->moveDistance(40_in);
-	//starts the intakes
-	leftintake.move_velocity(mv);
-	rightintake.move_velocity(mv);
-	towerlower.move_velocity(.5*mv);
-	//turns to the fourth ball
-	//														chassis->setMaxVelocity(50);
-	chassis->turnAngle(92_deg);
-	//														chassis->setMaxVelocity(200); //I'm sure you get the idea
-	//moves to the fourth ball
-	chassis->moveDistance(13.5_in);
-	//backs up
-	chassis->moveDistance(-8_in);
-	//stops the intakes
-	leftintake.move_velocity(stop);
-	rightintake.move_velocity(stop);
-	towerlower.move_velocity(stop);
-	//turns to the third goal
-	//														chassis->setMaxVelocity(50);
-	chassis->turnAngle(-54_deg);
-	//														chassis->setMaxVelocity(200); // oh look another one
-	//moves to the third goal
-	chassis->moveDistance(22_in);
-	chassis->moveDistance(-3_in);
-	//scores one ball in the third gaol
-	score(1200);
+	chassis->turnToAngle(90_deg);
+	intake(1);
+	chassis->moveDistance(15.2_in);
+	chassis->moveDistance(-15.2_in);
+	intake(0);
+	chassis->turnToAngle(149.5_deg);
+	chassis->moveDistance(24.4_in);
+	score(1); //one ball
+	chassis->moveDistance(-10_in);
+}
+
+
+
+void skills3(){
+	chassis->setState({0_in, 0_in, 0_deg});
+	chassis->setMaxVelocity(75);
+	towerControl->setTarget(-300);
+	intake(1);
+	go(0_in, 25_in, false);
+	intake(0);
+	go(-36.8_in, 25_in, false);
+	go(-36.8_in, 10.6_in, false);
+	score(2);
+	go(-36.8_in, 17.4_in, true);
+	intake(1);
+	go(-36.8_in, 40.8_in, false);
+	go(-12_in, 65.2_in, false);
+	go(0_in, 113.6_in, false);
+	intake(0);
+	go(-20.8_in, 127.12_in, false);
+	score(1);
+	go(12_in, 120.8_in, true);
+	intake(1);
+	go(12_in, 65.2_in, false);
+	intake(0);
+	go(19.2_in, 65.2_in, false);
+	score(2);
+	go(12_in, 65.2_in, true);
+	go(12_in, 29.2_in, false);
+	intake(1);
+	go(27.2_in, 29.2_in, false);
+	intake(0);
+	go(12_in, 29.2_in, true);
+	go(24.8_in, 8.18_in, false);
+	score(1);
+	go(12_in, 29.2_in, true);
+}
+
+
+
+
+void skills4(){
+	chassis->setState({0_in, 0_in, 0_deg});
+	chassis->setMaxVelocity(75);
+	towerControl->setTarget(-300);
+	intake(1);
+	go(0_in, 25_in, false);
+	intake(0);
+	go(-36.8_in, 25_in, false);
+	go(-36.8_in, 10.6_in, false);
+	score(2);
+	go(-36.8_in, 17.4_in, true);
+	intake(1);
+	go(-36.8_in, 40.8_in, false);
+	go(12_in, 65.2_in, false);
+	intake(0);
+	go(19.2_in, 65.2_in, false);
+	score(2);
+	go(12_in, 65.2_in, true);
+	go(12_in, 29.2_in, false);
+	intake(1);
+	go(27.2_in, 29.2_in, false);
+	intake(0);
+	go(12_in, 29.2_in, true);
+	go(24.8_in, 8.18_in, false);
+	score(1);
+	go(12_in, 29.2_in, true);
 }
