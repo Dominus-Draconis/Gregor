@@ -155,38 +155,39 @@ void skills2(){
 
 
 void skills3(){
-	chassis->setState({0_in, 0_in, 0_deg});
+	chassis->setState({0_in, 0_in, 0_deg});	//sets up initial conditions
 	chassis->setMaxVelocity(75);
 	towerControl->setTarget(-300);
-	intake(1);
-	go(0_in, 25_in, false);
-	intake(0);
-	go(-36.8_in, 25_in, false);
-	go(-36.8_in, 10.6_in, false);
-	score(2);
-	go(-36.8_in, 17.4_in, true);
-	intake(1);
-	go(-36.8_in, 40.8_in, false);
-	go(-12_in, 65.2_in, false);
-	go(0_in, 113.6_in, false);
-	intake(0);
-	go(-20.8_in, 127.12_in, false);
-	score(1);
-	go(12_in, 120.8_in, true);
-	intake(1);
-	go(12_in, 65.2_in, false);
-	intake(0);
-	go(19.2_in, 65.2_in, false);
-	score(2);
-	go(12_in, 65.2_in, true);
-	go(12_in, 29.2_in, false);
-	intake(1);
-	go(27.2_in, 29.2_in, false);
-	intake(0);
-	go(12_in, 29.2_in, true);
-	go(24.8_in, 8.18_in, false);
-	score(1);
-	go(12_in, 29.2_in, true);
+	intake(1);															//starts intakes
+	go(0_in, 25_in, false);									//goes to first ball
+	intake(0);															//stops intakes
+	go(-36.8_in, 25_in, false);							//goes to vertical center line
+	go(-36.8_in, 10.6_in, false);						//goes to first goal
+	score(2);																//scores 2 balls
+	go(-36.8_in, 17.4_in, true);						//backs up
+	intake(1);															//start intakes
+	go(-36.8_in, 40.8_in, false);						//goes to second ball
+	go(-12_in, 65.2_in, false);							//goes to third ball
+	go(0_in, 113.6_in, false);							//goes to fourth ball
+	intake(0);															//stops intakes
+	go(-20.8_in, 127.12_in, false);					//goes to second goal
+	score(1);																//scores one ball
+	go(12_in, 120.8_in, true);							//backs up
+	intake(1);															//starts intakes
+	go(12_in, 65.2_in, false);							//goes to fifth ball
+	intake(0);															//stops intakes
+	go(19.2_in, 65.2_in, false);						//goes to third goal
+	score(2);																//scores two balls
+	go(12_in, 65.2_in, true);								//backs up
+	go(12_in, 29.2_in, false);							//goes to the starting wall
+	intake(1);															//starts intakes
+	go(27.2_in, 29.2_in, false);						//goes to sixth ball
+	delay(500);															//waits to try to ensure it got the ball
+	intake(0);															//stops intakes
+	go(12_in, 29.2_in, true);								//backs up
+	go(24.8_in, 8.18_in, false);						//turns to fourth goal
+	score(1);																//scores one ball
+	go(12_in, 29.2_in, true);								//backs up
 }
 
 
