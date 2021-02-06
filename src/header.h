@@ -1,7 +1,8 @@
-//header.h
 #include "main.h"
 //functions
 void score();
+void intake(int mult);
+void score1(int reps);
 void right();
 void left();
 void onepointright();

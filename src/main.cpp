@@ -137,7 +137,8 @@ int scored = false;
 		//moves the upper and lower towers in order to shoot the ball out
 		if (master.get_digital(DIGITAL_UP)){
 			if (scored==false){
-				chassis->moveDistance(-2_in);
+				chassis->moveDistanceAsync(-2_in); //remove async if problems occour
+				delay(200);
 				scored=true;
 			}
 			tower.move_velocity(2.5*mv);
@@ -152,25 +153,16 @@ int scored = false;
 		else {
 			tower.move_velocity(0);
 		}
-		//starts the autonomous from the A button, helpful for testing
-		if (master.get_digital(DIGITAL_A)){
-			skills();
-		}//*
-		if (master.get_digital(DIGITAL_B)){
-			test();
-		}
-		if (master.get_digital(DIGITAL_X)){
-			onepointright();
-		}
-		if (master.get_digital(DIGITAL_Y)){
-			onepointleft();
+		if (master.get_digital(DIGITAL_LEFT)){
+			scored=false;
 		}
 		if (master.get_digital(DIGITAL_LEFT)){
-			left();
+			scored=false;
 		}
-		if (master.get_digital(DIGITAL_RIGHT)){
-			right();
-		}//*/
+		//starts the autonomous from the A button, helpful for testing
+		if (master.get_digital(DIGITAL_A)){
+			score1(3);
+		}
 		//updates ever 10 milliseconds
 		delay(10);
 	}
