@@ -1,14 +1,15 @@
 //header.h
 #include "main.h"
 //functions
-//void right();
-//void left();
-//void onepointright();
-//void onepointleft();
+void right();
+void left();
+void onepointright();
+void onepointleft();
 void skills1();
-void skills2();
+/*void skills2();
 void skills3();
 void skills4();
+void skills5();*/
 void score(int reps);
 void intake(int mult);
 //motors

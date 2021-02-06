@@ -60,9 +60,21 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-//uses a slower maimum velocity than in driver control to be more precise
-chassis->setState({0_in, 0_in, 0_deg});
-skills1();
+	//options:
+	//1)runs the 2 point match auton on the right side
+	//left();
+
+	//2) runs the 2 point match auton on the left side
+	//right();
+
+	//3) scores the preload in the goal in front from the right
+	//onepointright();
+
+	//4) scores the preload in the goal in front from the left
+	//onepointleft();
+
+	//5) runs the autonomous for skills
+	skills1();
 }
 
 
@@ -122,6 +134,7 @@ int scored = false;
 		if (master.get_digital(DIGITAL_UP)){
 			if (scored==false){
 				chassis->moveDistanceAsync(-2_in); //remove async if problems occour
+				delay(200);
 				scored=true;
 			}
 			tower.move_velocity(2.5*mv);
@@ -138,16 +151,7 @@ int scored = false;
 		}
 		//starts the autonomous from the A button, helpful for testing
 		if (master.get_digital(DIGITAL_A)){
-			skills3();	//4 goals to point
-		}
-		if (master.get_digital(DIGITAL_X)){
-			skills1();	//4 goals to angle
-		}
-		if (master.get_digital(DIGITAL_B)){
-			skills2();	//3 goals to angle
-		}
-		if (master.get_digital(DIGITAL_Y)){
-			skills4();	//3 goals to point
+			skills1();	//4 goals to point
 		}
 		//updates ever 10 milliseconds
 		delay(10);

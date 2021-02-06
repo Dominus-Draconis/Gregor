@@ -13,23 +13,6 @@
 
 //5) runs the autonomous for skills
 
-/*
-if (master.get_digital(DIGITAL_B)){
-  test();
-}
-if (master.get_digital(DIGITAL_X)){
-  onepointright();
-}
-if (master.get_digital(DIGITAL_Y)){
-  onepointleft();
-}
-if (master.get_digital(DIGITAL_LEFT)){
-  left();
-}
-if (master.get_digital(DIGITAL_RIGHT)){
-  right();
-}//*/
-
 //function to score 2 points on the right side
 void right(){
 	//flips out the hood (asynchronously)
